@@ -42,7 +42,7 @@ void gsm_properties()
     property_set("ro.telephony.default_network", "9");
 }
 
-void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *board_type)
+void vendor_load_properties(unsigned long msm_id, unsigned long msm_ver, char *board_type)
 {
     char platform[PROP_VALUE_MAX];
     char bootloader[PROP_VALUE_MAX];
