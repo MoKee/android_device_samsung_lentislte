@@ -24,7 +24,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LENTISLTE_PATH)/bluetooth
 
 # Kernel
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02600000 --tags_offset 0x02400000 --second_offset 0x00f00000
-TARGET_KERNEL_VARIANT_CONFIG := apq8084_sec_lentislte_skt_defconfig
+TARGET_KERNEL_CONFIG := emotion_cm_defconfig
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 17825792
