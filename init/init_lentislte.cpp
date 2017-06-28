@@ -28,7 +28,6 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
@@ -36,6 +35,30 @@
 #include "util.h"
 
 #include "init_apq8084.h"
+
+const char *fingerprint[3] = {
+  "samsung/lentislteskt/lentislteskt:6.0.1/MMB29M/G906SKSU1CPL1:user/release-keys",
+  "samsung/lentisltektt/lentisltektt:6.0.1/MMB29M/G906KKTU1CPL1:user/release-keys",
+  "samsung/lentisltelgt/lentisltelgt:6.0.1/MMB29M/G906LKLU1CPL2:user/release-keys"
+};
+
+const char *description[3] = {
+  "lentislteskt-user 6.0.1 MMB29M G906SKSU1CPL1 release-keys",
+  "lentisltektt-user 6.0.1 MMB29M G906KKTU1CPL1 release-keys",
+  "lentisltelgt-user 6.0.1 MMB29M G906LKLU1CPL2 release-keys"
+};
+
+const char *model[3] = {
+  "SM-G906S",
+  "SM-G906K",
+  "SM-G906L"
+};
+
+const char *device[3] =  {
+  "lentislteskt",
+  "lentisltektt",
+  "lentisltelgt"
+};
 
 void init_target_properties()
 {
@@ -45,28 +68,23 @@ void init_target_properties()
 
     std::string bootloader = property_get("ro.bootloader");
 
-    if (bootloader.find("G906S") == 0) {
-        /* SKT */
-        property_set("ro.build.fingerprint", "samsung/lentislteskt/lentislteskt:6.0.1/MMB29M/G906SKSU1CPL1:user/release-keys");
-        property_set("ro.build.description", "lentislteskt-user 6.0.1 MMB29M G906SKSU1CPL1 release-keys");
-        property_set("ro.product.model", "SM-G906S");
-        property_set("ro.product.device", "lentislteskt");
-    } else if (bootloader.find("G906K") == 0) {
-        /* KTT */
-        property_set("ro.build.fingerprint", "samsung/lentisltektt/lentisltektt:6.0.1/MMB29M/G906KKTU1CPL1:user/release-keys");
-        property_set("ro.build.description", "lentisltektt-user 6.0.1 MMB29M G906KKTU1CPL1 release-keys");
-        property_set("ro.product.model", "SM-G906K");
-        property_set("ro.product.device", "lentisltektt");
-    } else if (bootloader.find("G906L") == 0) {
-        /* LGT */
-        property_set("ro.build.fingerprint", "samsung/lentisltelgt/lentisltelgt:6.0.1/MMB29M/G906LKLU1CPL2:user/release-keys");
-        property_set("ro.build.description", "lentisltelgt-user 6.0.1 MMB29M G906LKLU1CPL2 release-keys");
-        property_set("ro.product.model", "SM-G906L");
-        property_set("ro.product.device", "lentisltelgt");
-    } else {
-      ERROR("Setting product info FAILED\n");
-    }
+    int idx = 0;
+
+    if (bootloader.find("G906S") == 0)		/* SKT */
+	idx = 0;
+    else if (bootloader.find("G906K") == 0)	/* KTT */
+	idx = 1;
+    else if (bootloader.find("G906L") == 0)	/* LGT */
+	idx = 2;
+    else
+	ERROR("Setting product info FAILED\n");
+
+    property_set("ro.build.fingerprint", fingerprint[idx]);
+    property_set("ro.build.description", description[idx]);
+    property_set("ro.product.model", model[idx]);
+    property_set("ro.product.device", device[idx]);
 
     std::string device = property_get("ro.product.device");
-    INFO("Found bootloader id %s setting build properties for %s device\n", bootloader.c_str(), device.c_str());
+    INFO("Found bootloader id %s setting build properties for %s device\n",
+	 bootloader.c_str(), device.c_str());
 }
