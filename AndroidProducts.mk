@@ -19,5 +19,5 @@ ifneq ($(RR_BUILD),)
         $(LOCAL_DIR)/rr_lentislte.mk
 else
     PRODUCT_MAKEFILES += \
-        $(LOCAL_DIR)/lineage_lentislte.mk
+        $(LOCAL_DIR)/mk_lentislte.mk
 endif
